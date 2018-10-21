@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+<head>
+    <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="./p5/p5.js"></script>
+    <script src="./tbh2018test.js"></script>
+</head>
+<body>
+    <div id="curr_cnt"></div>
+    <div id="gyro_x">0</div>
+    <div id="gyro_y">0</div>
+    <div id="gyro_z">0</div>
+    <div id="gyro_pitch">0</div>
+    <div id="gyro_roll">0</div>
+    <div id="gyro_yaw">0</div>
+    <div id="gyro_rate">0</div>
+    <div id="gyro_isCalibrated">0</div>
+    <button type="button" onclick=taiko_sound(0x3C)>taiko</button>
+    <button type="button" onclick=trigger_arpeggio()>arpegiio</button>
+    <button type="button" onclick=disp_clear()>clear</button>
+</body>
+</html>

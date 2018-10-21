@@ -1,0 +1,532 @@
+/*
+<metadata description="Minimal XYZ Pad" details="XY pad with the addition of pressure (Z), sending out MIDI CC. You can set MIDI channel."
+          target="Lightpad" 
+          tags="MIDI;Controller;">
+    <variables>
+        <variable name="channel" displayName="MIDI Channel" type="int" min="1" max="16" value="1" displayMode="stepper" tooltip="The MIDI channel that values are sent on" />
+    </variables>
+</metadata>
+*/
+
+int ccX;
+int ccY;
+int ccZ;
+
+int r_byte0;
+int r_byte1;
+int r_byte2;
+
+int b_index;
+
+int playmode;
+
+int col_goo_line;
+int col_goo;
+
+int col_face_line;
+int col_face;
+
+int col_arp;
+int col_drum;
+
+int align;
+
+int is_touched;
+
+int temp_curr_part;
+int temp_curr_pos;
+
+int curr_pos;
+
+
+int a0;
+int a1;
+int a2;
+int a3;
+int a4;
+int a5;
+int a6;
+int a7;
+int a8;
+int a9;
+int a10;
+int a11;
+int a12;
+int a13;
+int a14;
+int a15;
+int a16;
+int a17;
+int a18;
+int a19;
+int a20;
+int a21;
+int a22;
+int a23;
+int a24;
+int a25;
+int a26;
+int a27;
+int a28;
+int a29;
+int a30;
+int a31;
+
+
+int b0;
+int b1;
+int b2;
+int b3;
+int b4;
+int b5;
+int b6;
+int b7;
+int b8;
+int b9;
+int b10;
+int b11;
+int b12;
+int b13;
+int b14;
+int b15;
+int b16;
+int b17;
+int b18;
+int b19;
+int b20;
+int b21;
+int b22;
+int b23;
+int b24;
+int b25;
+int b26;
+int b27;
+int b28;
+int b29;
+int b30;
+int b31;
+
+
+void initialise()    
+{
+    col_goo_line = 0xFFFF0000;
+    col_goo      = 0xFFFF8400;
+    col_face_line = 0xFF00B400;
+    col_face      = 0xFF00FF00;
+    col_arp       = 0xFF00CCEE;
+    col_drum      = 0xFFFF0000;    
+    align        = 0;
+    is_touched   = 0;
+    playmode     = 0;
+    clearseqdata(0);
+    clearseqdata(1);
+}
+
+void clearseqdata(int index){
+
+    if(index == 0){
+
+        a0 = 0;
+        a1 = 0;
+        a2 = 0;
+        a3 = 0;
+        a4 = 0;
+        a5 = 0;
+        a6 = 0;
+        a7 = 0;
+        a8 = 0;
+        a9 = 0;
+        a10 = 0;
+        a11 = 0;
+        a12 = 0;
+        a13 = 0;
+        a14 = 0;
+        a15 = 0;
+        a16 = 0;
+        a17 = 0;
+        a18 = 0;
+        a19 = 0;
+        a20 = 0;
+        a21 = 0;
+        a22 = 0;
+        a23 = 0;
+        a24 = 0;
+        a25 = 0;
+        a26 = 0;
+        a27 = 0;
+        a28 = 0;
+        a29 = 0;
+        a30 = 0;
+        a31 = 0;
+
+    }else if(index == 1){
+
+        b0 = 0;
+        b1 = 0;
+        b2 = 0;
+        b3 = 0;
+        b4 = 0;
+        b5 = 0;
+        b6 = 0;
+        b7 = 0;
+        b8 = 0;
+        b9 = 0;
+        b10 = 0;
+        b11 = 0;
+        b12 = 0;
+        b13 = 0;
+        b14 = 0;
+        b15 = 0;
+        b16 = 0;
+        b17 = 0;
+        b18 = 0;
+        b19 = 0;
+        b20 = 0;
+        b21 = 0;
+        b22 = 0;
+        b23 = 0;
+        b24 = 0;
+        b25 = 0;
+        b26 = 0;
+        b27 = 0;
+        b28 = 0;
+        b29 = 0;
+        b30 = 0;
+        b31 = 0;
+
+    }
+
+}
+
+
+
+void drawGoo(){
+     // draw frame
+     /*
+     fillRect (col_goo_line, 0, 0, 15, 1);
+     fillRect (col_goo_line, 0, 0, 1, 15);
+     fillRect (col_goo_line, 14, 0, 1, 15);
+     fillRect (col_goo_line, 0, 14, 15, 1);
+     // draw main rect 
+     fillRect (col_goo, 4+align, 3+align, 5, 1); // hitosashi yubi
+     fillRect (col_goo, 3+align, 4+align, 9, 1);
+     fillRect (col_goo, 3+align, 5+align, 10, 2);
+     fillRect (col_goo, 2+align, 7+align, 11, 4);
+     fillRect (col_goo, 3+align, 11+align, 10, 1);
+     fillRect (col_goo, 4+align, 12+align, 7, 1);
+    // draw gap 
+    fillRect (0, 4+align, 7+align, 1, 2);
+    fillRect (0, 5+align, 8+align, 1, 2);
+    fillRect (0, 6+align, 9+align, 5, 1);
+    fillRect (0, 8+align, 11+align, 1, 2);
+    fillRect (0, 7+align, 8+align, 1, 1);
+    fillRect (0, 6+align, 9+align, 1, 1);
+*/
+     
+     fillRect (col_goo_line, 6, 5, 1, 1);
+     fillRect (col_goo_line, 5, 4, 1, 2);
+     fillRect (col_goo_line, 4, 3, 1, 3);
+     fillRect (col_goo_line, 3, 2, 1, 2);
+
+     fillRect (col_goo_line, 8, 5, 1, 1);
+     fillRect (col_goo_line, 9, 4, 1, 2);
+     fillRect (col_goo_line, 10, 3, 1, 3);
+     fillRect (col_goo_line, 11, 2, 1, 2);
+
+     
+
+
+     fillRect (col_goo, 4, 8, 1, 3);
+     fillRect (col_goo, 5, 7, 1, 5);
+     fillRect (col_goo, 6, 6, 1, 7);
+     fillRect (col_goo, 7, 6, 1, 7);
+     fillRect (col_goo, 8, 6, 1, 7);
+     fillRect (col_goo, 9, 7, 1, 5);
+     fillRect (col_goo, 10, 8, 1, 3);
+     //fillRect (col_goo, 10, 4, 1, 3);
+     //fillRect (col_goo, 11, 6, 1, 4);
+     //fillRect (col_goo, 12, 8, 1, 4);
+
+}
+
+
+void touchStart (int index, float x, float y, float z, float vz)
+{
+    addPressurePoint (0xFFFFFFFF, x, y, z * 5.0);
+    ccX = int(map(x, 0.07, 1.93, 0.0, 127.0));//X座標のデータ(0.07~1.93)を0~127に変換
+    ccY = int(map(y, 0.07, 1.93, 0.0, 127.0));//Y座標のデータ(0.07~1.93)を0~127に変換
+    ccZ = int(map(z, 0.0, 1.0, 0.0, 127.0));//Z(プレッシャー)のデータを(0.0~1.0)を0~127に変換
+    sendCC ((channel - 1), 60, ccX);//X座標 CC60
+    sendCC ((channel - 1), 61, ccY);//Y座標 CC61
+    sendCC ((channel - 1), 62, ccZ);//プレッシャー  CC62
+
+    is_touched = 1;
+}
+
+void touchMove (int index, float x, float y, float z, float vz)
+{
+    addPressurePoint (0xFFFFFFFF, x, y, z * 5.0);
+    ccX = int(map(x, 0.07, 1.93, 0.0, 127.0));//X座標のデータ(0.07~1.93)を0~127に変換
+    ccY = int(map(y, 0.07, 1.93, 0.0, 127.0));//Y座標のデータ(0.07~1.93)を0~127に変換
+    ccZ = int(map(z, 0.0, 1.0, 0.0, 127.0));//Z(プレッシャー)のデータを(0.0~1.0)を0~127に変換
+    sendCC ((channel - 1), 60, ccX);//X座標 CC60
+    sendCC ((channel - 1), 61, ccY);//Y座標 CC61
+    sendCC ((channel - 1), 62, ccZ);//プレッシャー  CC62
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    ccX = 0;
+    ccY = 0;
+    ccZ = 0;
+    sendCC ((channel - 1), 60, ccX);//X座標 CC60
+    sendCC ((channel - 1), 61, ccY);//Y座標 CC61
+    sendCC ((channel - 1), 62, ccZ);//プレッシャー  CC62
+
+    is_touched = 0;
+}
+
+void drawNormal(){
+    if(curr_pos <= 15){
+        fillRect(0xFFFFFFFF, curr_pos, 1, 1,1);
+    }else{
+        fillRect(0xFFFFFFFF, curr_pos-15, 7, 1,1);
+    }
+
+    //drawNumber(r_byte0, 0xffff0000, 0, 0);
+    if(a1 != 0)fillRect(col_arp, 1, 2+5-a1, 1, 1);
+    if(a2 != 0)fillRect(col_arp, 2, 2+5-a2, 1, 1);
+    if(a3 != 0)fillRect(col_arp, 3, 2+5-a3, 1, 1);
+    if(a4 != 0)fillRect(col_arp, 4, 2+5-a4, 1, 1);
+    if(a5 != 0)fillRect(col_arp, 5, 2+5-a5, 1, 1);
+    if(a6 != 0)fillRect(col_arp, 6, 2+5-a6, 1, 1);
+    if(a7 != 0)fillRect(col_arp, 7, 2+5-a7, 1, 1);
+    if(a8 != 0)fillRect(col_arp, 8, 2+5-a8, 1, 1);
+    if(a9 != 0)fillRect(col_arp, 9, 2+5-a9, 1, 1);
+    if(a10 != 0)fillRect(col_arp, 10, 2+5-a10, 1, 1);
+    if(a11 != 0)fillRect(col_arp, 11, 2+5-a11, 1, 1);
+    if(a12 != 0)fillRect(col_arp, 12, 2+5-a12, 1, 1);
+    if(a13 != 0)fillRect(col_arp, 13, 2+5-a13, 1, 1);
+    if(a14 != 0)fillRect(col_arp, 14, 2+5-a14, 1, 1);
+    if(a15 != 0)fillRect(col_arp, 15, 2+5-a15, 1, 1);
+    if(a16 != 0)fillRect(col_arp, 1, 8+5-a16, 1, 1);
+    if(a17 != 0)fillRect(col_arp, 2, 8+5-a17, 1, 1);
+    if(a18 != 0)fillRect(col_arp, 3, 8+5-a18, 1, 1);
+    if(a19 != 0)fillRect(col_arp, 4, 8+5-a19, 1, 1);
+    if(a20 != 0)fillRect(col_arp, 5, 8+5-a20, 1, 1);
+    if(a21 != 0)fillRect(col_arp, 6, 8+5-a21, 1, 1);
+    if(a22 != 0)fillRect(col_arp, 7, 8+5-a22, 1, 1);
+    if(a23 != 0)fillRect(col_arp, 8, 8+5-a23, 1, 1);
+    if(a24 != 0)fillRect(col_arp, 9, 8+5-a24, 1, 1);
+    if(a25 != 0)fillRect(col_arp, 10, 8+5-a25, 1, 1);
+    if(a26 != 0)fillRect(col_arp, 11, 8+5-a26, 1, 1);
+    if(a27 != 0)fillRect(col_arp, 12, 8+5-a27, 1, 1);
+    if(a28 != 0)fillRect(col_arp, 13, 8+5-a28, 1, 1);
+    if(a29 != 0)fillRect(col_arp, 14, 8+5-a29, 1, 1);
+    if(a30 != 0)fillRect(col_arp, 15, 8+5-a30, 1, 1);
+    // if(a31 != 0)fillRect(col_arp, 15, 8+5-a30, 1, 1);
+    // if(a32 != 0)fillRect(col_arp, 15, 8+5-a30, 1, 1);
+
+
+    if(b1 != 0)fillRect(col_drum, 1, 1, 1, 1);
+    if(b2 != 0)fillRect(col_drum, 2, 1, 1, 1);
+    if(b3 != 0)fillRect(col_drum, 3, 1, 1, 1);
+    if(b4 != 0)fillRect(col_drum, 4, 1, 1, 1);
+    if(b5 != 0)fillRect(col_drum, 5, 1, 1, 1);
+    if(b6 != 0)fillRect(col_drum, 6, 1, 1, 1);
+    if(b7 != 0)fillRect(col_drum, 7, 1, 1, 1);
+    if(b8 != 0)fillRect(col_drum, 8, 1, 1, 1);
+    if(b9 != 0)fillRect(col_drum, 9, 1, 1, 1);
+    if(b10 != 0)fillRect(col_drum, 10, 1, 1, 1);
+    if(b11 != 0)fillRect(col_drum, 11, 1, 1, 1);
+    if(b12 != 0)fillRect(col_drum, 12, 1, 1, 1);
+    if(b13 != 0)fillRect(col_drum, 13, 1, 1, 1);
+    if(b14 != 0)fillRect(col_drum, 14, 1, 1, 1);
+    if(b15 != 0)fillRect(col_drum, 15, 1, 1, 1);
+    if(b16 != 0)fillRect(col_drum, 1, 7, 1, 1);
+    if(b17 != 0)fillRect(col_drum, 2, 7, 1, 1);
+    if(b18 != 0)fillRect(col_drum, 3, 7, 1, 1);
+    if(b19 != 0)fillRect(col_drum, 4, 7, 1, 1);
+    if(b20 != 0)fillRect(col_drum, 5, 7, 1, 1);
+    if(b21 != 0)fillRect(col_drum, 6, 7, 1, 1);
+    if(b22 != 0)fillRect(col_drum, 7, 7, 1, 1);
+    if(b23 != 0)fillRect(col_drum, 8, 7, 1, 1);
+    if(b24 != 0)fillRect(col_drum, 9, 7, 1, 1);
+    if(b25 != 0)fillRect(col_drum, 10, 7, 1, 1);
+    if(b26 != 0)fillRect(col_drum, 11, 7, 1, 1);
+    if(b27 != 0)fillRect(col_drum, 12, 7, 1, 1);
+    if(b28 != 0)fillRect(col_drum, 13, 7, 1, 1);
+    if(b29 != 0)fillRect(col_drum, 14, 7, 1, 1);
+    if(b30 != 0)fillRect(col_drum, 15, 7, 1, 1);
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+void drawFace(){
+     // draw frame
+     fillRect (col_face_line, 0, 0, 15, 1);
+     fillRect (col_face_line, 0, 0, 1, 15);
+     fillRect (col_face_line, 14, 0, 1, 15);
+     fillRect (col_face_line, 0, 14, 15, 1);
+     // draw main rect 
+     fillRect (col_face, 1, 9, 1, 14); // hitosashi yubi
+     fillRect (col_face, 2, 5, 1, 14); // hitosashi yubi
+    fillRect (col_face, 3, 2, 1, 14); // hitosashi yubi
+    fillRect (col_face, 4, 3, 1, 14); // hitosashi yubi
+    fillRect (col_face, 5, 2, 1, 14); // hitosashi yubi
+    fillRect (col_face, 6, 3, 1, 14); // hitosashi yubi
+    fillRect (col_face, 7, 5, 1, 14); // hitosashi yubi
+    fillRect (col_face, 8, 7, 1, 14); // hitosashi yubi
+    fillRect (col_face, 9, 9, 1, 14); // hitosashi yubi
+    fillRect (0xFFFFFFFF, 3, 4, 1, 1); //eye
+    fillRect (0xFFFFFFFF, 5, 4, 1, 1); //eye
+    
+
+}
+
+
+void repaint()
+{
+    clearDisplay();//前フレームのデータを消して画面をまっさらな状態にする
+    //drawPressureMap();//指の軌跡を描画する
+    //fadePressureMap();//古い軌跡から徐々にフェードアウト
+    //drawNumber(ccX, 0xffff0000, 0, 0);//ccXを赤色で表示
+    //drawNumber(ccY, 0xff00ff00, 0, 5); //ccYを緑色で表示
+    //drawNumber(ccZ, 0xff0000ff, 0, 10);//ccZを青色で表示
+    
+   // drawNumber(r_byte0, 0xffff0000, 0, 0);
+    //drawNumber(r_byte0, 0xffff0000, 0, 0);
+    //drawNumber(r_byte1, 0xff00ff00, 0, 5);
+    //drawNumber(r_byte2, 0xff0000ff, 0, 10);
+    //fillRect(0xFF555555, 0, 0, 1, r_byte2/10);
+    if(playmode == 0){
+        if(is_touched == 1){
+            drawGoo();
+        }else{
+            drawNormal();
+
+        }
+    }else{
+        drawFace();
+    }
+}
+
+void handleMIDI(int byte0, int byte1, int byte2){
+    r_byte0 = byte0;
+    r_byte1 = byte1;
+    r_byte2 = byte2;
+
+
+    if(r_byte0 == 0xB0){
+        if(r_byte1 == 0x10){
+            temp_curr_part = r_byte2;
+            
+          if(temp_curr_part == 0)clearseqdata(r_byte2);
+        }else if(r_byte1 == 0x11){
+            temp_curr_pos = r_byte2;
+        
+        }else if(r_byte1 == 0x12){
+
+            if(r_byte2 != 0){
+
+                if(temp_curr_part == 0) {
+                    if(temp_curr_pos == 0){ a0 = r_byte2; }
+                    if(temp_curr_pos == 1){ a1 = r_byte2; }
+                    if(temp_curr_pos == 2){ a2 = r_byte2; }
+                    if(temp_curr_pos == 3){ a3 = r_byte2; }
+                    if(temp_curr_pos == 4){ a4 = r_byte2; }
+                    if(temp_curr_pos == 5){ a5 = r_byte2; }
+                    if(temp_curr_pos == 6){ a6 = r_byte2; }
+                    if(temp_curr_pos == 7){ a7 = r_byte2; }
+                    if(temp_curr_pos == 8){ a8 = r_byte2; }
+                    if(temp_curr_pos == 9){ a9 = r_byte2; }
+                    if(temp_curr_pos == 10){ a10 = r_byte2; }
+                    if(temp_curr_pos == 11){ a11 = r_byte2; }
+                    if(temp_curr_pos == 12){ a12 = r_byte2; }
+                    if(temp_curr_pos == 13){ a13 = r_byte2; }
+                    if(temp_curr_pos == 14){ a14 = r_byte2; }
+                    if(temp_curr_pos == 15){ a15 = r_byte2; }
+                    if(temp_curr_pos == 16){ a16 = r_byte2; }
+                    if(temp_curr_pos == 17){ a17 = r_byte2; }
+                    if(temp_curr_pos == 18){ a18 = r_byte2; }
+                    if(temp_curr_pos == 19){ a19 = r_byte2; }
+                    if(temp_curr_pos == 20){ a20 = r_byte2; }
+                    if(temp_curr_pos == 21){ a21 = r_byte2; }
+                    if(temp_curr_pos == 22){ a22 = r_byte2; }
+                    if(temp_curr_pos == 23){ a23 = r_byte2; }
+                    if(temp_curr_pos == 24){ a24 = r_byte2; }
+                    if(temp_curr_pos == 25){ a25 = r_byte2; }
+                    if(temp_curr_pos == 26){ a26 = r_byte2; }
+                    if(temp_curr_pos == 27){ a27 = r_byte2; }
+                    if(temp_curr_pos == 28){ a28 = r_byte2; }
+                    if(temp_curr_pos == 29){ a29 = r_byte2; }
+                    if(temp_curr_pos == 30){ a30 = r_byte2; }
+                    if(temp_curr_pos == 31){ a31 = r_byte2; }
+
+                }else if(temp_curr_part == 1){
+                    if(temp_curr_pos == 0){ b0 = r_byte2; }
+                    if(temp_curr_pos == 1){ b1 = r_byte2; }
+                    if(temp_curr_pos == 2){ b2 = r_byte2; }
+                    if(temp_curr_pos == 3){ b3 = r_byte2; }
+                    if(temp_curr_pos == 4){ b4 = r_byte2; }
+                    if(temp_curr_pos == 5){ b5 = r_byte2; }
+                    if(temp_curr_pos == 6){ b6 = r_byte2; }
+                    if(temp_curr_pos == 7){ b7 = r_byte2; }
+                    if(temp_curr_pos == 8){ b8 = r_byte2; }
+                    if(temp_curr_pos == 9){ b9 = r_byte2; }
+                    if(temp_curr_pos == 10){ b10 = r_byte2; }
+                    if(temp_curr_pos == 11){ b11 = r_byte2; }
+                    if(temp_curr_pos == 12){ b12 = r_byte2; }
+                    if(temp_curr_pos == 13){ b13 = r_byte2; }
+                    if(temp_curr_pos == 14){ b14 = r_byte2; }
+                    if(temp_curr_pos == 15){ b15 = r_byte2; }
+                    if(temp_curr_pos == 16){ b16 = r_byte2; }
+                    if(temp_curr_pos == 17){ b17 = r_byte2; }
+                    if(temp_curr_pos == 18){ b18 = r_byte2; }
+                    if(temp_curr_pos == 19){ b19 = r_byte2; }
+                    if(temp_curr_pos == 20){ b20 = r_byte2; }
+                    if(temp_curr_pos == 21){ b21 = r_byte2; }
+                    if(temp_curr_pos == 22){ b22 = r_byte2; }
+                    if(temp_curr_pos == 23){ b23 = r_byte2; }
+                    if(temp_curr_pos == 24){ b24 = r_byte2; }
+                    if(temp_curr_pos == 25){ b25 = r_byte2; }
+                    if(temp_curr_pos == 26){ b26 = r_byte2; }
+                    if(temp_curr_pos == 27){ b27 = r_byte2; }
+                    if(temp_curr_pos == 28){ b28 = r_byte2; }
+                    if(temp_curr_pos == 29){ b29 = r_byte2; }
+                    if(temp_curr_pos == 30){ b30 = r_byte2; }
+                    if(temp_curr_pos == 31){ b31 = r_byte2; }
+                }
+
+
+
+            }
+        }else if(r_byte1 == 0x13){
+            playmode = r_byte2;
+
+          if(playmode == 0){
+            clearseqdata(0);
+            clearseqdata(1);
+          }
+        }else if(r_byte1 == 0x14){
+            curr_pos = r_byte2;
+        } 
+
+    }
+
+}
+/*
+void handleButtonDown(int index){
+    b_index = index;
+    //drawNumber(index, 0xffff0000, 0, 0);
+}*/
